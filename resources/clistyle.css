@@ -56,6 +56,7 @@ body.dark {
     min-width: 60px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 
@@ -121,6 +122,10 @@ header .image-text .header-text {
 
 body.dark .sidebar header .toggle {
     color: var(--text-color);
+}
+
+.sidebar .menu {
+    margin-top: 35px;
 }
 
 .sidebar li a {
@@ -222,6 +227,8 @@ body.dark .switch::before {
     position: relative;
     height: 100vh;
     left: 250px;
+    padding-left: 3%;
+    padding-top: 2%;
     width: calc(100% - 250px);
     background: var(--body-color);
     transition: var(--tran-05);
@@ -230,4 +237,11 @@ body.dark .switch::before {
 .home .text {
     color: var(--text-color);
     padding: 8px 40px;
+}
+
+.container1 {
+    position: relative;
+    background: var(--primary-color-light);
+    border-radius: 10px;
+    width: 70%;
 }

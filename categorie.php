@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="resources/clistyle.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>BiblioTech</title>
+
+    <title>Categorie</title>
 </head>
 <body>
-    <nav class="sidebar close">
+<nav class="sidebar close">
         <header>
             <div class="image-text">
                 <span class="image">
@@ -26,7 +26,7 @@
             <div class="menu">
                 <ul class="menu-links">
                     <li class="nav-link">
-                        <a href="#" active blocked>
+                        <a href="index.php" active>
                             <i class='bx bx-home-alt icon' ></i>
                             <span class="text nav-text">Scopri</span>
                         </a>
@@ -38,7 +38,7 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="#">
+                        <a href="lamialibreria.php">
                             <i class='bx bx-library icon'></i>
                             <span class="text nav-text">La Mia Libreria</span>
                         </a>
@@ -84,7 +84,7 @@
 
 <section class="home">
     <div class="container1 text">
-        <h1>LIBRI</h1>
+        <h1>CATEGORIE</h1>
     </div>
 </section>
 </body>
