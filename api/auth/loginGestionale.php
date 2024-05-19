@@ -14,7 +14,7 @@ $user = new User($db);
 $user->email = isset($_POST['email']) ? $_POST['email'] : die();
 $user->password = isset($_POST['password']) ? $_POST['password'] : die();
 
-$reponse = $user->login();
+$response = $user->loginGestionale();
 
 if($response['status']){
     // get retrieved row
@@ -46,7 +46,7 @@ else{
     $user_arr=array(
         "status" => false,
         "code" => 404,
-        "message" => "Invalid Username or Password! User not found",
+        "message" => "Invalid Username or Password! User not or unauthorized",
     );
 }
 // make it json format
