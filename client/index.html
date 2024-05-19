@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="resources/clistyle.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script defer src="script.js"></script>
     <title>BiblioTech</title>
 </head>
@@ -85,9 +86,15 @@
 
     <div class="container2 text" id="libri">
         <div class="libro">
-            <h4>Titolo</h4>
-            <p>Autore</p>
-            <p>Categoria</p>
+            <div class="content">
+                <h4>Titolo</h4>
+                <p>Autore</p>
+                <p>Categoria</p>
+            </div>
+            <div class="actions">
+                <i class='bx bxs-heart' style='color:#ff0000; font-size: 25px; cursor: pointer;'></i>
+                <i class='bx bxs-book-add' style="font-size: 25px; cursor: pointer;"></i>
+            </div>
         </div>
     </div>
 </section>
