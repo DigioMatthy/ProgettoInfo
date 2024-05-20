@@ -4,8 +4,8 @@ class Database{
  
     // specify your own database credentials
     private $host = "localhost";            //Server
-    private $db_name = "progettoinfo";       //Database Name
-    private $username = "admin";             //UserName of Phpmyadmin
+    private $db_name = "bibliotech";       //Database Name
+    private $username = "root";             //UserName of Phpmyadmin
     private $password = "";                 //Password associated with username
     public $conn;
  
