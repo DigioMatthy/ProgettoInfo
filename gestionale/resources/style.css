@@ -1,0 +1,74 @@
+body {
+    background-color: #E4E9F7;
+}
+
+.form-container {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border-radius: 5px;
+}
+
+.btn-primary {
+    border-radius: 5px;
+}
+
+.message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.error {
+    background-color: #FFCCCC;
+    color: #CC0000;
+}
+
+.success {
+    background-color: #CCFFCC;
+    color: #006600;
+}
+
+.bibliotech {
+    padding: 10px;
+    text-align: center;
+    font-size: 32px;
+}
+
+.card-header,
+.form-group label {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.container {
+    text-align: center;
+    margin-top: 2%;
+}
+
+.cont {
+    border-radius: 25px;
+}
+
+.form-control {
+    border-radius: 25px;
+}
+
+.btn {
+    border-radius: 25px;
+}
+
+.card-header {
+    color: #6441A5;
+}

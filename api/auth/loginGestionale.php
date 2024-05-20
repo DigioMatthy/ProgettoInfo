@@ -37,6 +37,7 @@ if($response['status']){
         "message" => "Successfully Login!",
         "id" => $row['id'],
         "name" => $row['name'],
+        "surname" => $row['surname'],
         "email" => $row['email'],
         "role" => $row['codRole'],
         "token" => $token  //return token
