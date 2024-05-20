@@ -14,7 +14,7 @@ $user = new User($db);
 $user->email = isset($_POST['email']) ? $_POST['email'] : die();
 $user->password = isset($_POST['password']) ? $_POST['password'] : die();
 
-$reponse = $user->login();
+$response = $user->login();
 
 if($response['status']){
     // get retrieved row
@@ -37,6 +37,7 @@ if($response['status']){
         "message" => "Successfully Login!",
         "id" => $row['id'],
         "name" => $row['name'],
+        "surname" => $row['surname'],
         "email" => $row['email'],
         "role" => $row['codRole'],
         "token" => $token  //return token
