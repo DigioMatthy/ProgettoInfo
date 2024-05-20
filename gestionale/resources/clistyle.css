@@ -255,6 +255,10 @@ body.dark .switch::before {
 .container2 {
     height: 100vh;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 25px;
+    padding: 0 !important;
 }
 
 .libro {
@@ -279,3 +283,29 @@ body.dark .switch::before {
     justify-content: space-between;
 }
 
+.addLibro {
+    background: var(--sidebar-color);
+    opacity: 0.4;
+    width: 250px;
+    height: 300px;
+    border-radius: 6px;
+    font-size: 20px;
+}
+
+.addLibro h4 {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.add {
+    position: relative;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    width: max-content;
+}
+
+.containerprova {
+    margin-left: 20px;
+}
