@@ -248,24 +248,27 @@ function GetAllBooks() {
         dataType: 'json',
         data: {token: token},
         success: (data) => {
-            data.books.forEach(book => {
-                booksContainer.innerHTML += `
-                <div class="containercards">
-                    <div class="libro" >
-                        <div class="content" onclick='GetBookById(${book.id})'>
-                            <h4 class="ellipse">${book.title}</h4>
-                            <p class="ellipse">${book.author}</p>
-                            <p class="ellipse">${book.category}</p>
-                        </div>
-                        <div class="actions">
-                            <i class='bx bxs-edit' style="font-size: 35px; cursor: pointer;" onclick=OpenEditModal(${book.id})></i>
-                            <i class='bx bx-trash' style="font-size: 35px; cursor: pointer;" onclick='DeleteBook(${book.id}, "${book.title}", "${book.ISBN}")'></i>
-                        </div>
-                    </div>
-                </div> 
-                `;
-            });
 
+            if(data.books != null) {
+                data.books.forEach(book => {
+                    booksContainer.innerHTML += `
+                    <div class="containercards">
+                        <div class="libro" >
+                            <div class="content" onclick='GetBookById(${book.id})'>
+                                <h4 class="ellipse">${book.title}</h4>
+                                <p class="ellipse">${book.author}</p>
+                                <p class="ellipse">${book.category}</p>
+                            </div>
+                            <div class="actions">
+                                <i class='bx bxs-edit' style="font-size: 35px; cursor: pointer;" onclick=OpenEditModal(${book.id})></i>
+                                <i class='bx bx-trash' style="font-size: 35px; cursor: pointer;" onclick='DeleteBook(${book.id}, "${book.title}", "${book.ISBN}")'></i>
+                            </div>
+                        </div>
+                    </div> 
+                    `;
+                });
+            }
+                        
             booksContainer.innerHTML += `
             <div class="containercards">
                 <div class="addLibro">
