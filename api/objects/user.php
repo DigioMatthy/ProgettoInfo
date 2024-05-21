@@ -78,7 +78,14 @@ class User{
         //check if the password is correct
         $rows = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if(password_verify($this->password, $rows['password'])) {
+        if(!isset($this->password) || $stmt->rowCount() < 1){
+            $res = array(
+                "status"=> false,
+                "rows"=> null
+            );
+
+            return $res;
+        } else if(password_verify($this->password, $rows['password'])) {
             $res = array(
                 "status"=> true,
                 "rows"=> $rows
@@ -110,7 +117,14 @@ class User{
         //check if the password is correct
         $rows = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if(password_verify($this->password, $rows['password'])) {
+        if(!isset($this->password) || $stmt->rowCount() < 1){
+            $res = array(
+                "status"=> false,
+                "rows"=> null
+            );
+
+            return $res;
+        } else if(password_verify($this->password, $rows['password'])) {
             $res = array(
                 "status"=> true,
                 "rows"=> $rows
@@ -121,6 +135,8 @@ class User{
                 "rows"=> null
             );
         }
+
+        
 
         return $res;
     }

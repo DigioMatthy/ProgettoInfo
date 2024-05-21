@@ -3,13 +3,59 @@
 <head>
     <title>BiblioTech </title>
     <link rel="stylesheet" href="resources/clistyle.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script defer src="script.js"></script>
 </head>
 <body>
+
+    <!-- MODAL - Add Book -->
+    <div class="overlay-add" id="overlay-add"></div>
+    <div class="modal" id="modal-add">
+        <i class='bx bx-x-circle' id="close-btn" onclick="CloseAddModal()"></i>
+        <form>
+            <label for="title">Inserire titolo:</label>
+            <input type="text" id="title" required> <br>
+            <label for="author">Inserire autore:</label>
+            <input type="text" id="author" required> <br>
+            <label for="ISBN">Inserire ISBN:</label>
+            <input type="text" id="isbn" required> <br>
+            <label for="category">Inserire categoria:</label>
+            <input type="text" id="category" required> <br>
+            <label for="publishYear">Inserire anno di pubblicazione:</label>
+            <input type="date" id="year" required> <br>
+        </form>
+        <button class="save" onclick="AddBook()">Salva</button>
+    </div>
+
+    <!-- MODAL - View Book -->
+    <div class="overlay-view" id="overlay-view"></div>
+    <div class="modal" id="modal-view">
+        
+    </div>
+
+    <!-- MODAL - Edit Book -->
+    <div class="overlay-edit" id="overlay-edit">
+        <div class="modal" id="modal-edit">
+            <i class='bx bx-x-circle' id="close-btn" onclick="CloseEditModal()"></i>
+            <form>
+                <label for="title">Modificare titolo:</label>
+                <input type="text" id="titleEdit" required> <br>
+                <label for="author">Modificare autore:</label>
+                <input type="text" id="authorEdit" required> <br>
+                <label for="ISBN">Modificare ISBN:</label>
+                <input type="text" id="isbnEdit" required> <br>
+                <label for="category">Modificare categoria:</label>
+                <input type="text" id="categoryEdit" required> <br>
+                <label for="publishYear">Modificare anno di pubblicazione:</label>
+                <input type="date" id="yearEdit" required> <br>
+            </form>
+            <button class="save" onclick="EditBook()">Modifica</button>
+        </div>
+    </div>        
+    <!-- SnackBar -->
+    <div id="snackbar"></div>
+
     <nav class="sidebar">
         <header>
             <div class="image-text">
@@ -36,6 +82,8 @@
             </div>
 
             <div class="bottom-content">
+                <li id="signedUser" class="nav-link">
+                </li>
                 <li class="" onclick="LogOutUser()">
                     <a href="#">
                         <i class='bx bx-log-out icon'></i>
@@ -65,87 +113,6 @@
     </div>
 
     <div class="container2 text" id="libri">
-        <div class="libro">
-            <div class="content">
-                <h4>Titolo</h4>
-                <p>Autore</p>
-                <p>Categoria</p>
-            </div>
-            <div class="actions">
-                <i class='bx bxs-edit' style="font-size: 35px; cursor: pointer;" data-toggle="modal" data-target="#exampleModal"></i>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>il contenuto del modal va qui</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-                <i class='bx bx-x-circle' style="font-size: 35px; cursor: pointer;"></i>
-            </div>
-        </div>
-        <div class="containercards">
-            <div class="libro">
-                <div class="content">
-                    <h4>Titolo</h4>
-                    <p>Autore</p>
-                    <p>Categoria</p>
-                </div>
-                <div class="actions">
-                    <i class='bx bxs-edit' style="font-size: 35px; cursor: pointer;"></i>
-                    <i class='bx bx-x-circle' style="font-size: 35px; cursor: pointer;"></i>
-                </div>
-            </div>
-        </div>
-        <div class="containercards">
-            <div class="libro">
-                <div class="content">
-                    <h4>Titolo</h4>
-                    <p>Autore</p>
-                    <p>Categoria</p>
-                </div>
-                <div class="actions">
-                    <i class='bx bxs-edit' style="font-size: 35px; cursor: pointer;"></i>
-                    <i class='bx bx-x-circle' style="font-size: 35px; cursor: pointer;"></i>
-                </div>
-            </div>
-        </div>
-        <div class="containercards">
-            <div class="libro">
-                <div class="content">
-                    <h4>Titolo</h4>
-                    <p>Autore</p>
-                    <p>Categoria</p>
-                </div>
-                <div class="actions">
-                    <i class='bx bxs-edit' style="font-size: 35px; cursor: pointer;"></i>
-                    <i class='bx bx-x-circle' style="font-size: 35px; cursor: pointer;"></i>
-                </div>
-            </div>
-        </div>
-        
-        
-        <div class="containercards">
-            <div class="addLibro">
-                <div class="content">
-                    <h4>Aggiungi libro</h4>
-                </div>
-                <div class="add">
-                    <i class='bx bx-plus-circle' style="font-size: 100px; cursor: pointer;"></i>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 </body>

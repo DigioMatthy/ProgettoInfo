@@ -23,13 +23,13 @@ if($user->signup()){
     $user_arr=array(
         "status" => true,
         "code" => 200,
-        "message" => "Successfully Signed up!"
+        "message" => "Registrazione effettuata con successo! Effettua il login per entrare nella dashboard."
     );
 } else {
     $user_arr=array(
         "status" => true,
-        "code" => 300,
-        "message" => "user already exists!"
+        "code" => 403,
+        "message" => "Utente gia' esistente."
     );
 }
 print_r(json_encode($user_arr));

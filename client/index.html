@@ -11,6 +11,9 @@
     <title>BiblioTech</title>
 </head>
 <body>
+    <!-- SnackBar -->
+    <div id="snackbar"></div>
+    
     <nav class="sidebar">
         <header>
             <div class="image-text">
@@ -34,12 +37,6 @@
                         </a>
                     </li>
                     <li class="nav-link">
-                        <a href="categorie.html" >
-                            <i class='bx bxs-book-content icon'></i>
-                            <span class="text nav-text">Categorie</span>
-                        </a>
-                    </li>
-                    <li class="nav-link">
                         <a href="lamialibreria.html">
                             <i class='bx bx-library icon'></i>
                             <span class="text nav-text">La Mia Libreria</span>
@@ -55,6 +52,8 @@
             </div>
 
             <div class="bottom-content">
+                <li id="signedUser" class="nav-link">
+                </li>
                 <li class="" onclick="LogOutUser()">
                     <a href="#">
                         <i class='bx bx-log-out icon'></i>

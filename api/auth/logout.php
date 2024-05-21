@@ -24,7 +24,7 @@ if($token == $_SESSION['apiToken']){
     $response = array(
         "status" => true,
         "code" => 200,
-        "message" => "Successfully Logged out!",
+        "message" => "Logout effettuato con successo!",
     );
 
 } else {
@@ -32,7 +32,7 @@ if($token == $_SESSION['apiToken']){
     $response = array(
         "status" => false,
         "code" => 300,
-        "message" => "Invalid API token!"
+        "message" => "Token API Invalido!"
     );
 }
 print_r(json_encode($response));

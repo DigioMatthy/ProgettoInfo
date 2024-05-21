@@ -34,7 +34,7 @@ if($response['status']){
     $user_arr=array(
         "status" => true,
         "code" => 200,
-        "message" => "Successfully Login!",
+        "message" => "Login effettuato con successo!",
         "id" => $row['id'],
         "name" => $row['name'],
         "surname" => $row['surname'],
@@ -47,7 +47,7 @@ else{
     $user_arr=array(
         "status" => false,
         "code" => 404,
-        "message" => "Invalid Username or Password! User not found",
+        "message" => "Email o password errati. Utente non trovato, riprovare.",
     );
 }
 // make it json format

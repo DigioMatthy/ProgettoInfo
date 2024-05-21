@@ -5,11 +5,14 @@ const body = document.querySelector("body"),
     modeText = body.querySelector(".mode-text");
 
 
+//State variables
+var isViewModalOpen = false,
+    isAddModalOpen = false;
+
+
 addEventListener("load", function(event) {
     //check if user is authenticated
     CheckAuthenticatedUser();
-
-
 
     //Controllo che esista la chiave "mode"
     if(localStorage.getItem("mode") === null){
@@ -26,6 +29,7 @@ addEventListener("load", function(event) {
     }
 });
 
+/* UI */
 function ToggleDarkMode() {
     if(localStorage.getItem("mode") === "dark"){
         body.classList.remove("dark");
@@ -45,11 +49,28 @@ function CheckAuthenticatedUser() {
         //redirect to login
         location.href = "loginpage.html";
     }
-    
-    
-    
 
+    //Set label
+    var label = body.querySelector("#signedUser");
+    if(!location.href.endsWith("loginpage.html") && label != null) {
+        //Set singed in label
+       var user = JSON.parse(localStorage.getItem("user"));
+
+       label.innerHTML = `
+       <span>Signed In as: ${user.name} ${user.surname}</span>
+        <span>${user.email}</span>
+       `;
+    }
+
+    //Retreive books
+   /*  if(( localStorage.getItem("user") != null && localStorage.getItem("apiToken") != null ) && location.href.endsWith("index.html")) {
+        GetAllBooks();
+    } */
 }
+
+/* UI */
+
+/* Authentication */
 
 function LogInUser(role = 2) {
     //Get form values
@@ -84,13 +105,17 @@ function LogInUser(role = 2) {
                     //Set token
                     localStorage.setItem("apiToken", data.token);
 
-                    location.href = "index.html";
+                    ShowSnackBar(data.message);
+    
+                    setTimeout(() => {
+                        location.href = 'index.html';
+                    }, 4000);
                 } else {
-                    alert("Wrong email or password, please retry.");
+                    ShowSnackBar(data.message);
                 }
             },
             error: (data) => {
-                alert("User does not exist")
+                ShowSnackBar(data.message);
             }
         })
     } else if (role == 2) {
@@ -100,8 +125,6 @@ function LogInUser(role = 2) {
             dataType: 'json',
             data: user,
             success: (data) => {
-                console.log(data);
-
                 if(data.status || data.code == 200){
                     //Set user in localStorage
                     var authUser = { 
@@ -117,14 +140,17 @@ function LogInUser(role = 2) {
                     //Set token
                     localStorage.setItem("apiToken", data.token);
 
-                    location.href = "index.html";
+                    ShowSnackBar(data.message);
+    
+                    setTimeout(() => {
+                        location.href = 'index.html';
+                    }, 4000);
                 } else {
-                    alert("Wrong email or password, please retry.");
+                    ShowSnackBar(data.message);
                 }
-                
             },
             error: (data) => {
-                alert("User does not exist")
+                ShowSnackBar(data.message);
             }
             
         })
@@ -143,10 +169,21 @@ function LogOutUser(){
         data: {token:token},
         success: (data) => {
 
-            localStorage.removeItem("user")
-            localStorage.removeItem("apiToken");
+            if(data.status || data.code === 200) {
+                ShowSnackBar(data.message);
+    
+                localStorage.removeItem("user")
+                localStorage.removeItem("apiToken");
 
-            location.reload();
+                setTimeout(() => {
+                    location.reload();
+                }, 4000);
+            } else {
+                ShowSnackBar(data.message);
+            }
+        },
+        error: (data) => {
+            ShowSnackBar(data.message);
         }
     })
 }
@@ -157,6 +194,11 @@ function RegisterUser(role = 2) {
     var cognome = body.querySelector("#cognomeR").value;
     var email = body.querySelector("#emailR").value;
     var password = body.querySelector("#passwordR").value;
+
+    if(nome == "" || cognome == "" || email == "" || password == ""){
+        ShowSnackBar("Inserire tutti i campi!");
+        return;
+    }
 
     var newUser = {
         "name": nome,
@@ -172,7 +214,28 @@ function RegisterUser(role = 2) {
         dataType: 'json',
         data: newUser,
         success: (data) => {
-            console.log(data);
+            if(data.status || data.code === 200) {
+                ShowSnackBar(data.message);
+
+            } else {
+                ShowSnackBar(data.message);
+            }
+        },
+        error: (data) => {
+            ShowSnackBar(data.message);
         }
     })
 }
+
+/* Authentication */
+
+/* SnackBar */
+
+function ShowSnackBar(message) {
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    x.innerText = message;
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
+/* SnackBar */
