@@ -261,7 +261,7 @@ function GetAllBooks() {
                             </div>
                             <div class="actions">
                                 <i class='bx bxs-edit' style="font-size: 35px; cursor: pointer;" onclick=OpenEditModal(${book.id})></i>
-                                <i class='bx bx-trash' style="font-size: 35px; cursor: pointer;" onclick='DeleteBook(${book.id}, "${book.title}", "${book.ISBN}")'></i>
+                                <i class='bx bx-trash' style="font-size: 35px; cursor: pointer;" onclick='DeleteBook(${book.id})'></i>
                             </div>
                         </div>
                     </div> 
@@ -401,34 +401,42 @@ function EditBook() {
     })
 }
 
-function DeleteBook(id, title, isbn) {
+function DeleteBook(bookID) {
     //Get API token from localStorage
     var token = localStorage.getItem('apiToken');
 
-    var text = `Vuoi davvero eliminare ${title}? \n ISBN: ${isbn} .`;
+    $.ajax({
+        url: '../api/books/getBookById.php',
+        type: 'POST',
+        dataType: 'json',
+        data: {token: token, id: bookID},
+        success: (data) => {
+            var text = `Vuoi davvero eliminare ${data.book.title}? \n ISBN: ${data.book.ISBN} .`;
 
-    if(confirm(text) == true) {
-        $.ajax({
-            url: '../api/books/deleteBook.php',
-            type: "POST",
-            dataType: 'json',
-            data: {id: id, token: token},
-            success: (data) => {
-                if(data.status || data.code === 200) {
-                    console.log(data.message);
-                    ShowSnackBar(data.message);
+            if(confirm(text) == true) {
+                $.ajax({
+                    url: '../api/books/deleteBook.php',
+                    type: "POST",
+                    dataType: 'json',
+                    data: {id: bookID, token: token},
+                    success: (data) => {
+                        if(data.status || data.code === 200) {
+                            console.log(data.message);
+                            ShowSnackBar(data.message);
 
-                    setTimeout(() => {
-                        location.reload();
-                    }, 4000);
-                } else {
-                    ShowSnackBar(data.message);
-                }
+                            setTimeout(() => {
+                                location.reload();
+                            }, 4000);
+                        } else {
+                            ShowSnackBar(data.message);
+                        }
+                    }
+                })
+            } else {
+                return;
             }
-        })
-    } else {
-        return;
-    }
+        }
+    });
 }
 
 /* Books API */

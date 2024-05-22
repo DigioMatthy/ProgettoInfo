@@ -5,6 +5,9 @@
         // connessione e nome della tabella
         private $conn;
         private $table_name = 'book';
+        private $table_favs = 'favourite';
+        private $table_borrow = 'borrow';
+
 
         // proprieta' dell'oggetto
         public $id;
@@ -115,7 +118,6 @@
 
             // execute query
             if($stmt->execute()){
-                $this->id = $this->conn->lastInsertId();
                 return true;
             }
         
@@ -183,6 +185,215 @@
             return false;
         }
 
+        function addToFavourites($userID) {
+            if($this->isAlreadyFavourite($userID)) {
+                $res = array(
+                    "status"=>true,
+                    "code"=>205,
+                    "message"=>"Il libro e' gia' tra i tuoi preferiti"
+                );
+            } else {
+                $query = "INSERT INTO
+                            " . $this->table_favs . "
+                        SET
+                            codBook=:bkID, codUser=:bkUser";
+
+                // prepare query statement
+                $stmt = $this->conn->prepare($query);
+
+                // sanitize
+                $this->id=htmlspecialchars(strip_tags($this->id));
+                $userID=htmlspecialchars(strip_tags($userID));
+
+                // bind values
+                $stmt->bindParam(":bkID", $this->id);
+                $stmt->bindParam(":bkUser", $userID);
+
+                // execute query
+                if($stmt->execute()){
+                    $res = array(
+                        "status"=>true,
+                        "code"=>200,
+                        "message"=>"Libro aggiunto ai preferiti"
+                    );
+                }
+            }
+
+            return $res;
+        }
+
+        function GetAllUserFavourites($userID){
+            $query = "SELECT "
+                    .$this->table_name.".id, ".$this->table_name.".title, ".$this->table_name.".author, ".$this->table_name.".ISBN, ".$this->table_name.".category, ".$this->table_name.".publishYear
+                     FROM ".$this->table_name." INNER JOIN ".$this->table_favs." WHERE ".$this->table_favs.".codUser=".$userID." AND ".$this->table_name.".id=".$this->table_favs.".codBook";
+
+            // prepare query statement
+            $stmt = $this->conn->prepare($query);
+
+            // execute query
+            $stmt->execute();
+
+            if($stmt->rowCount() > 0) {
+                //Get rows 
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                // generate response - success
+                $res = array(
+                    "status"=> true,
+                    "rows"=> $rows
+                );
+            } else {
+                // generate response - failed
+                $res = array(
+                    "status"=> false,
+                    "rows"=> null 
+                );
+            }
+
+            return $res;
+        }
+
+        function removeFromFavs($userID){
+            //Check if book exists
+            if($this->isAlreadyExistsById()){
+                $query = "DELETE FROM " . $this->table_favs . " WHERE codBook=:bkID AND codUser=:bkUser";
+
+                // prepare query statement
+                $stmt = $this->conn->prepare($query);
+
+                // sanitize
+                $this->id=htmlspecialchars(strip_tags($this->id));
+                $userID=htmlspecialchars(strip_tags($userID));
+
+                // bind values
+                $stmt->bindParam(":bkID", $this->id);
+                $stmt->bindParam(":bkUser", $userID);
+
+                // execute query
+                $stmt->execute();
+
+                if($stmt->rowCount() > 0) {
+                    // generate response - success
+                    return true;
+                } else {
+                    // generate response - failed
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+            return false;
+        }
+
+        function borrowBook($userID) {
+            if($this->isAlreadyBorrowed($userID)) {
+                $res = array(
+                    "status"=>true,
+                    "code"=>205,
+                    "message"=>"Il libro e' gia' nella tua libreria"
+                );
+            } else {
+                $query = "INSERT INTO
+                            " . $this->table_borrow . "
+                        SET
+                            borrowedDate=:bDate, returnDate=:retDate, codBook=:bkID, codUser=:bkUser";
+
+                // prepare query statement
+                $stmt = $this->conn->prepare($query);
+
+                // sanitize
+                $this->id=htmlspecialchars(strip_tags($this->id));
+                $userID=htmlspecialchars(strip_tags($userID));
+
+                //Get return Date
+                $today = date('Y-m-d');
+                $date = date('Y-m-d', strtotime('+1 month', strtotime($today)));
+
+                // bind values
+                $stmt->bindParam(":bDate", $today);
+                $stmt->bindParam(":retDate", $date);
+                $stmt->bindParam(":bkID", $this->id);
+                $stmt->bindParam(":bkUser", $userID);
+
+                // execute query
+                if($stmt->execute()){
+                    $res = array(
+                        "status"=>true,
+                        "code"=>200,
+                        "message"=>"Libro aggiunto alla tua libreria"
+                    );
+                }
+            }
+
+            return $res;
+        }
+
+        function GetAllBorrowedBooks($userID) {
+            $query = "SELECT "
+                    .$this->table_name.".id, ".$this->table_name.".title, ".$this->table_name.".author, ".$this->table_name.".ISBN, ".$this->table_name.".category, ".$this->table_name.".publishYear
+                     FROM ".$this->table_name." INNER JOIN ".$this->table_borrow." WHERE ".$this->table_borrow.".codUser=".$userID." AND ".$this->table_name.".id=".$this->table_borrow.".codBook";
+
+            // prepare query statement
+            $stmt = $this->conn->prepare($query);
+
+            // execute query
+            $stmt->execute();
+
+            if($stmt->rowCount() > 0) {
+                //Get rows 
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                // generate response - success
+                $res = array(
+                    "status"=> true,
+                    "rows"=> $rows
+                );
+            } else {
+                // generate response - failed
+                $res = array(
+                    "status"=> false,
+                    "rows"=> null 
+                );
+            }
+
+            return $res;
+        }
+
+        function returnBook($userID){
+            //Check if book exists
+            if($this->isAlreadyExistsById()){
+                $query = "DELETE FROM " . $this->table_borrow . " WHERE codBook=:bkID AND codUser=:bkUser";
+
+                // prepare query statement
+                $stmt = $this->conn->prepare($query);
+
+                // sanitize
+                $this->id=htmlspecialchars(strip_tags($this->id));
+                $userID=htmlspecialchars(strip_tags($userID));
+
+                // bind values
+                $stmt->bindParam(":bkID", $this->id);
+                $stmt->bindParam(":bkUser", $userID);
+
+                // execute query
+                $stmt->execute();
+
+                if($stmt->rowCount() > 0) {
+                    // generate response - success
+                    return true;
+                } else {
+                    // generate response - failed
+                    return false;
+                }
+
+            } else {
+                return false;
+            }
+
+            return false;
+        }
 
         //Cheks if the book exists
         function isAlreadyExists() {
@@ -219,6 +430,44 @@
             }
             else{
                 return false;
+            }
+        }
+
+        function isAlreadyFavourite($userID){
+            if($this->isAlreadyExistsById()){
+                $query = "SELECT * FROM " . $this->table_favs . " WHERE codBook='".$this->id."' AND codUser=".$userID;
+
+                // prepare query statement
+                $stmt = $this->conn->prepare($query);
+
+                // execute query
+                $stmt->execute();
+
+                if($stmt->rowCount() > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+        }
+
+        function isAlreadyBorrowed($userID){
+            if($this->isAlreadyExistsById()){
+                $query = "SELECT * FROM " . $this->table_borrow . " WHERE codBook='".$this->id."' AND codUser=".$userID;
+
+                // prepare query statement
+                $stmt = $this->conn->prepare($query);
+
+                // execute query
+                $stmt->execute();
+
+                if($stmt->rowCount() > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+
             }
         }
 

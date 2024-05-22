@@ -22,7 +22,19 @@ $userID = isset($_POST['idUser']) ? $_POST['idUser'] : die();
 
 if($token == $_SESSION['apiToken']) {
 
-    $res = $book->borrowBook($userID);
+    if($book->returnBook($userID)) {
+        $res = array(
+            "status" => true,
+            "code" => 200,
+            "message"=>"Libro restituito!"
+        );
+    } else {
+        $res = array(
+            "status" => false,
+            "code" => 403,
+            "message"=>"Libro inesistente"
+        );
+    }
 
 } else {
     $res = array(
