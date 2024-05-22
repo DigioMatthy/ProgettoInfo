@@ -388,7 +388,6 @@ i.bx-heart {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s;
-    position: absolute;
     position: fixed;
     top: 50%;
     left: 50%;

@@ -15,7 +15,10 @@
     --toggle-color: #DDD;
     --text-color: #000;
 
+    --tran-02: all 0.2s ease;
+    --tran-03: all 0.3s ease;
     --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
 }
 
 body {
@@ -76,7 +79,7 @@ body.dark {
 .sidebar li .icon,
 .sidebar li .text {
     color: var(--text-color);
-    transition: var(--tran-04);
+    transition: var(--tran-02);
 }
 
 .sidebar header {
@@ -176,7 +179,7 @@ body.dark .sidebar li a:hover .text {
 
 .menu-bar .mode i {
     position: absolute;
-    transition: var(--tran-04);
+    transition: var(--tran-03);
 }
 
 .menu-bar .mode i.sun {
@@ -220,7 +223,7 @@ body.dark .menu-bar .mode i.moon {
     left: 5px;
     transform: translateY(-50%);
     background-color: var(--sidebar-color);
-    transition: var(--tran-04);
+    transition: var(--tran-03);
 }
 
 body.dark .switch::before {
@@ -235,7 +238,7 @@ body.dark .switch::before {
     padding-top: 2%;
     width: calc(100% - 250px);
     background: var(--body-color);
-    transition: var(--tran-04);
+    transition: var(--tran-05);
 }
 
 .home .text {
@@ -335,30 +338,12 @@ body.dark .switch::before {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
-.bx-x-circle {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 30px;
-    cursor: pointer;
-    color: var(--text-color);
-}
-
-i {
-    transition: 0.2s;
-}
-
-i:hover {
-    color: var(--primary-color);
-}
-
+  
 /** Modal */
 .modal {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s;
-    position: absolute;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -375,9 +360,17 @@ i:hover {
     z-index: 200;
 }
 
+.bx-x-circle {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--text-color);
+}
 
 /** Overlay */
-.overlay, .overlay-add, .overlay-edit, .overlay-view {
+.overlay {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.3s;
@@ -396,6 +389,7 @@ i:hover {
 .is-visible {
     opacity: 1;
     pointer-events: auto;
+    z-index: 9999999;
 }
 
 .save {
