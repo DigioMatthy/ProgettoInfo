@@ -3,7 +3,7 @@
 class Database{
  
     // specify your own database credentials
-    private $host = "localhost";            //Server
+    private $host = "db";            //Server
     private $db_name = "bibliotech";       //Database Name
     private $username = "root";             //UserName of Phpmyadmin
     private $password = "";                 //Password associated with username
